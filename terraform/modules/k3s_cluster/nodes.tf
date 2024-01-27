@@ -38,7 +38,7 @@ resource "proxmox_virtual_environment_vm" "node" {
     user_account {
       username = "adm"
       password = random_password.node_user_pwd.result
-      keys     = [var.tls_key]
+      keys     = [trimspace(data.tls_public_key.ssh_key.public_key_openssh)]
     }
   }
 
