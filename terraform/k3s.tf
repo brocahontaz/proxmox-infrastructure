@@ -1,44 +1,15 @@
-resource "proxmox_virtual_environment_vm" "test_node" {
-  name        = "test-node"
-  description = "Managed by Terraform"
-  tags        = ["terraform", "ubuntu", "k3s"]
+module "k3s_cluster" {
+  source = "./modules/k3s_cluster"
 
-  node_name = "eldton"
+  tls_key = var.k3s_tls_key
 
-  agent {
-    enabled = true
+  cluster_name = var.k3s_cluster_name
+  node_count   = var.k3s_node_count
+
+  cpu_cores = var.k3s_cpu_cores
+  memory    = var.k3s_memory
+
+  providers = {
+    proxmox = proxmox
   }
-
-  clone {
-    vm_id        = 9000
-    full         = true
-    datastore_id = "local-lvm"
-    node_name    = "eldton"
-  }
-
-  cpu {
-    architecture = "x86_64"
-    cores        = 1
-    sockets      = 1
-  }
-
-  memory {
-    dedicated = 4096
-  }
-
-  initialization {
-    ip_config {
-      ipv4 {
-        address = "dhcp"
-      }
-    }
-
-    user_account {
-      username = "ubuntu"
-      password = "ubuntu"
-      keys     = []
-    }
-  }
-
-  keyboard_layout = "sv"
 }
