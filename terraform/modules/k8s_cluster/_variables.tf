@@ -21,6 +21,28 @@ variable "memory" {
   default     = 4096
 }
 
+variable "tags" {
+  type        = list(string)
+  description = "Tags to set on the nodes"
+  default     = []
+}
+
+variable "clone_id" {
+  type        = number
+  description = "The id of the template to clone"
+  default     = 9000
+}
+
+variable "host_node" {
+  type        = string
+  description = "The hostnode to provision the nodes on"
+}
+
+variable "username" {
+  type        = string
+  description = "The username to create in the nodes"
+}
+
 variable "tls_key" {
   type = string
   description = "The TLS key to inject as authorized in the nodes for SSH capabilities"

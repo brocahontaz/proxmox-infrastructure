@@ -1,51 +1,29 @@
-resource "proxmox_virtual_environment_vm" "node" {
+module "nodes" {
+  source = "../vm"
+  
   count = var.node_count
 
-  name        = "${var.cluster_name}-${count.index}"
-  description = "Managed by Terraform"
-  tags        = ["terraform", "ubuntu", "k8s"]
+  name = "${var.cluster_name}-${count.index}"
+  tags = var.tags
 
-  node_name = "eldton"
+  host_node = var.host_node
+  clone_id  = var.clone_id
 
-  agent {
-    enabled = true
+  cpu_cores = var.cpu_cores
+  memory    = var.memory
+  
+  username = var.username
+  tls_key  = var.tls_key
+
+  generate_password = false
+  password          = random_password.user_pwd.result
+
+  providers = {
+    proxmox = proxmox
   }
-
-  clone {
-    vm_id        = 9000
-    full         = true
-    datastore_id = "local-lvm"
-    node_name    = "eldton"
-  }
-
-  cpu {
-    architecture = "x86_64"
-    cores        = var.cpu_cores
-    sockets      = 1
-  }
-
-  memory {
-    dedicated = var.memory
-  }
-
-  initialization {
-    ip_config {
-      ipv4 {
-        address = "dhcp"
-      }
-    }
-
-    user_account {
-      username = "fjall"
-      password = random_password.node_user_pwd.result
-      keys     = [trimspace(data.tls_public_key.ssh_key.public_key_openssh)]
-    }
-  }
-
-  keyboard_layout = "sv"
 }
 
-resource "random_password" "node_user_pwd" {
+resource "random_password" "user_pwd" {
   length           = 16
   override_special = "_%@"
   special          = true
