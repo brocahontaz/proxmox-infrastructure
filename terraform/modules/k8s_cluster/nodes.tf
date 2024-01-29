@@ -3,7 +3,7 @@ resource "proxmox_virtual_environment_vm" "node" {
 
   name        = "${var.cluster_name}-${count.index}"
   description = "Managed by Terraform"
-  tags        = ["terraform", "ubuntu", "k3s"]
+  tags        = ["terraform", "ubuntu", "k8s"]
 
   node_name = "eldton"
 
