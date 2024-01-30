@@ -14,6 +14,8 @@ module "k8s_cluster" {
 
   username = var.k8s_username
   tls_key  = var.k8s_tls_key
+
+  zigbee_usb_id = var.k8s_zigbee_usb_id
   
   providers = {
     proxmox = proxmox

@@ -53,3 +53,9 @@ variable "tls_key" {
   type = string
   description = "The TLS key to inject as authorized in the VM for SSH capabilities"
 }
+
+variable "usb_id" {
+  type        = string
+  description = "The id of a USB device"
+  default     = ""
+}

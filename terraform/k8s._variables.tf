@@ -47,3 +47,9 @@ variable "k8s_tls_key" {
   type = string
   description = "The TLS key to inject as authorized in the nodes for SSH capabilities"
 }
+
+variable "k8s_zigbee_usb_id" {
+  type        = string
+  description = "The id of a Zigbee USB device"
+  default     = ""
+}

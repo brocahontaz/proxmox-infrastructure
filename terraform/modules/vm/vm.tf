@@ -41,6 +41,14 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   keyboard_layout = "sv"
+
+  dynamic "usb" {
+    for_each = var.usb_id != "" ? [1] : []
+
+    content {
+      host = var.usb_id
+    }
+  }
 }
 
 resource "random_password" "user_pwd" {

@@ -18,6 +18,8 @@ module "nodes" {
   generate_password = false
   password          = random_password.user_pwd.result
 
+  usb_id = var.zigbee_usb_id
+
   providers = {
     proxmox = proxmox
   }
