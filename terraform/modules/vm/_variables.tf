@@ -32,6 +32,12 @@ variable "memory" {
   default     = 4096
 }
 
+variable "vlan_id" {
+  type        = string
+  description = "Id of vlan to use"
+  default     = ""
+}
+
 variable "username" {
   type        = string
   description = "The username to create in the VM"

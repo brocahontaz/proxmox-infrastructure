@@ -26,6 +26,14 @@ resource "proxmox_virtual_environment_vm" "vm" {
     dedicated = var.memory
   }
 
+  dynamic "network_device" {
+    for_each = var.vlan_id != "" ? [1] : []
+
+    content {
+      vlan_id = var.vlan_id
+    }
+  }
+
   initialization {
     ip_config {
       ipv4 {
